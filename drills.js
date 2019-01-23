@@ -156,7 +156,6 @@ const main = () => {
 main();
 //height = 5
 
-
 // function getHeight(bst) {
 //   //traverse the bst
 //   // increment when we go down a level
@@ -182,6 +181,7 @@ main();
 //   return height;
 // }
 
+/* ======== HEIGHT OF A BST ======== */
 const getHeight = (bst) => {
   if (!bst) {
     return 0;
@@ -225,3 +225,82 @@ tempBst.insert(5, 0);
 tempBst.insert(7, 0);
 
 console.log(getHeight(tempBst));
+
+/* ======== is it BST ======== */
+//input: 3,1,4,6,9,2,5,7
+//output: true
+
+// have something traverse
+// case for checking duplicates
+// case for checking order (left > right) return false
+// after all if we havent returned false return true
+
+function isBst(bt, duplicates = []) {
+  //base case
+  if (!bt) {
+    return false;
+  }
+  if (bt.parent === null) {
+    duplicates.push(bt.key);
+  }
+
+  if (bt.right && bt.left) {
+    if (duplicates.indexOf(bt.key) === -1) {
+      duplicates.push(bt.key);
+      if (isBst(bt.right, duplicates) && isBst(bt.left, duplicates)) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  if (bt.left) {
+    // add the number to an array to check for duplicates
+    // if not a duplicate add to the array
+    if (bt.left.key > bt.key) {
+      return false;
+    }
+    if (duplicates.indexOf(bt.left.key) === -1) {
+      duplicates.push(bt.left.key);
+      return isBst(bt.left, duplicates);
+    } else {
+      return false;
+    }
+  }
+  if (bt.right) {
+    //if left > parent
+    if (bt.right.key < bt.key && bt.left.key < bt.right.key) {
+      return false;
+    }
+    // add the number to an array to check for duplicates
+    // if not a duplicate add to the array
+    if (duplicates.indexOf(bt.right.key) === -1) {
+      duplicates.push(bt.right.key);
+      return isBst(bt.right, duplicates);
+    } else {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+const newbt = new BinarySearchTree();
+
+// newbt.insert(6, 0);
+// newbt.insert(8, 0);
+// newbt.insert(8, 0);
+newbt.insert(3, 0);
+newbt.insert(1, 0);
+newbt.insert(4, 0);
+newbt.insert(6, 0);
+newbt.insert(9, 0);
+newbt.insert(2, 0);
+newbt.insert(5, 0);
+newbt.insert(7, 0);
+// newbt.insert(7, 0);
+
+console.log(isBst(newbt));
