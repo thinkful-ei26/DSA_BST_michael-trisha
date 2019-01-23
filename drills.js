@@ -149,7 +149,79 @@ const main = () => {
   bst.insert(2, 0);
   bst.insert(5, 0);
   bst.insert(7, 0);
-  console.log(bst);
+  //console.log(bst);
+  // getHeight(bst);
 };
 
 main();
+//height = 5
+
+
+// function getHeight(bst) {
+//   //traverse the bst
+//   // increment when we go down a level
+//   // return the lowest level
+
+//   let height = 0;
+//   // temp furthestDown
+//   // maybe recursion
+//   //console.log('First log: ', bst.key);
+//   if (!bst) {
+//     return height;
+//   }
+//   //check to see if there's left & right for each recursion
+//   if (bst.left) {
+//     let left = getHeight(bst.left);
+//     console.log('left node', left.key);
+//   }
+//   if (bst.right) {
+//     let right = getHeight(bst.right);
+//     console.log('right node', right.key);
+//   }
+
+//   return height;
+// }
+
+const getHeight = (bst) => {
+  if (!bst) {
+    return 0;
+  }
+  if (!bst.left && !bst.right) {
+    return 1;
+  }
+  if (bst.left && bst.right) {
+    let left = getHeight(bst.left);
+    let right = getHeight(bst.right);
+    if (left > right) {
+      return left + 1;
+    } else {
+      return right + 1;
+    }
+  }
+  if (bst.left) {
+    let left = getHeight(bst.left);
+    return left + 1;
+  }
+  if (bst.right) {
+    let right = getHeight(bst.right);
+    return right + 1;
+  }
+};
+
+const tempBst = new BinarySearchTree();
+
+// tempBst.insert(2, 0);
+// tempBst.insert(3, 0);
+// tempBst.insert(6, 0);
+// tempBst.insert(1, 0);
+
+tempBst.insert(3, 0);
+tempBst.insert(1, 0);
+tempBst.insert(4, 0);
+tempBst.insert(6, 0);
+tempBst.insert(9, 0);
+tempBst.insert(2, 0);
+tempBst.insert(5, 0);
+tempBst.insert(7, 0);
+
+console.log(getHeight(tempBst));
